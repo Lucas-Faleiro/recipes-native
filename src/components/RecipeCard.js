@@ -1,8 +1,6 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 
 const RecipeCard = ({ strMealThumb, strMeal }) => {
-  console.log(strMealThumb);
-
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{ uri: strMealThumb }} />
