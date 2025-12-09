@@ -1,11 +1,16 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, StyleSheet, Text } from "react-native";
 
-const RecipeCard = ({ strMealThumb, strMeal }) => {
+const RecipeCard = ({ recipe }) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.card}>
-      <Image style={styles.image} source={{ uri: strMealThumb }} />
-      <Text style={styles.title}>{strMeal}</Text>
-    </View>
+    <Pressable
+      style={styles.card}
+      onPress={() => navigation.navigate("Details", { recipe })}
+    >
+      <Image style={styles.image} source={{ uri: recipe.strMealThumb }} />
+      <Text style={styles.title}>{recipe.strMeal}</Text>
+    </Pressable>
   );
 };
 

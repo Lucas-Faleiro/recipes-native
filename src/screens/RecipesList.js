@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   TextInput,
   StyleSheet,
   FlatList,
@@ -9,7 +8,7 @@ import {
 import { getRecipes } from "../data/api";
 import { useCallback, useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
-import { debounce, set } from "lodash";
+import { debounce } from "lodash";
 
 const RecipesList = () => {
   const [allRecipes, setAllRecipes] = useState([]);
@@ -54,7 +53,6 @@ const RecipesList = () => {
 
   return (
     <View style={style.container}>
-      <Text>Recipes List Screen</Text>
       <TextInput
         placeholder="Search Recipes"
         style={style.input}
@@ -68,12 +66,7 @@ const RecipesList = () => {
           <FlatList
             data={visibleRecipes}
             keyExtractor={(item) => item.idMeal.toString()}
-            renderItem={({ item }) => (
-              <RecipeCard
-                strMealThumb={item.strMealThumb}
-                strMeal={item.strMeal}
-              />
-            )}
+            renderItem={({ item }) => <RecipeCard recipe={item} />}
             onEndReached={loadMoreRecipes}
             onEndReachedThreshold={0.1}
             ListFooterComponent={
