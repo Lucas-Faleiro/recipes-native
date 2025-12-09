@@ -1,6 +1,9 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import { fetchRecipes } from "../data/api";
 
 const RecipesList = () => {
+  fetchRecipes();
+
   return (
     <View>
       <Text style={style.container}>Recipes List Screen</Text>
