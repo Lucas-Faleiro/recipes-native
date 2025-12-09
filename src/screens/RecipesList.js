@@ -7,26 +7,42 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { getRecipes } from "../data/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
+import { debounce, set } from "lodash";
 
 const RecipesList = () => {
   const [allRecipes, setAllRecipes] = useState([]);
   const [visibleRecipes, setVisibleRecipes] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+
+  const debouncedSearch = useCallback(
+    debounce((text) => {
+      setSearchQuery(text);
+      setPage(1);
+    }, 500),
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const recipesList = await getRecipes();
+      const recipesList = await getRecipes(searchQuery);
       setAllRecipes(recipesList);
       setVisibleRecipes(recipesList.slice(0, page * 10));
       setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [searchQuery]);
+
+  const handleSearch = (text) => {
+    setInputValue(text);
+    debouncedSearch(text);
+  };
 
   const loadMoreRecipes = () => {
     setLoading(true);
@@ -39,7 +55,12 @@ const RecipesList = () => {
   return (
     <View style={style.container}>
       <Text>Recipes List Screen</Text>
-      <TextInput placeholder="Search Recipes" style={style.input} />
+      <TextInput
+        placeholder="Search Recipes"
+        style={style.input}
+        value={inputValue}
+        onChangeText={handleSearch}
+      />
       {loading && visibleRecipes.length === 0 ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
