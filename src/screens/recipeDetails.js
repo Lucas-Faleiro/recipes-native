@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { getRecipeById } from "../data/api";
-import { Activity, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const RecipeDetails = ({ route }) => {
   const [recipe, setRecipe] = useState(null);
