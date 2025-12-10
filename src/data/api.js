@@ -10,7 +10,6 @@ export const getRecipes = async (filter) => {
     if (filter) {
       const response = await fetch(`${SEARCH_INPUT_URL}${filter}`);
       const data = await response.json();
-      console.log(data);
       return data.meals;
     }
     const response = await fetch(SEAFOOD_URL);
@@ -25,7 +24,6 @@ export const getRecipeById = async (id) => {
   try {
     const response = await fetch(`${RECIPE_BY_ID_URL}${id}`);
     const data = await response.json();
-    console.log(data.meals);
     return data.meals;
   } catch (error) {
     console.error("Erro ao recuperar a receita:", error);

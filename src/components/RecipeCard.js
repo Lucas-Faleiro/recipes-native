@@ -6,7 +6,7 @@ const RecipeCard = ({ recipe }) => {
   return (
     <Pressable
       style={styles.card}
-      onPress={() => navigation.navigate("Details", { recipe })}
+      onPress={() => navigation.navigate("Details", { id: recipe.idMeal })}
     >
       <Image style={styles.image} source={{ uri: recipe.strMealThumb }} />
       <Text style={styles.title}>{recipe.strMeal}</Text>
